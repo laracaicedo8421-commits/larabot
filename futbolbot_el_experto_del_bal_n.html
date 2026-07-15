@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutbolBot - Experto en Fútbol Mundial y Ecuatoriano</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Barra de desplazamiento personalizada para el historial de chat */
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: rgba(243, 244, 246, 0.5);
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 4px;
+        }
+        .chat-scroll::-webkit-scrollbar-thumb:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col">
+
+    <!-- Encabezado / Barra de navegación -->
+    <header class="bg-slate-900 border-b border-emerald-800/40 py-4 px-6 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <!-- Icono de balón de fútbol con colores alusivos -->
+                <div class="relative w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center shadow-inner overflow-hidden border-2 border-yellow-400">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-700 via-red-600 to-yellow-400 opacity-30"></div>
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
+                        <path d="M12 2v20M2 12h20M12 12l7.07-7.07M4.93 19.07l14.14-14.14M4.93 4.93l14.14 14.14" stroke-width="1.5" stroke-linecap="round"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+                        Futbol<span class="text-emerald-400">Bot</span>
+                        <span class="text-xs bg-yellow-400 text-gray-950 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Ecuador & Mundial</span>
+                    </h1>
+                    <p class="text-xs text-gray-400">Tu asistente experto en la Tri, LigaPro y el fútbol global</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <span class="w-3.5 h-3.5 bg-emerald-500 rounded-full animate-ping"></span>
+                <span class="text-xs text-emerald-400 font-semibold uppercase tracking-wider">Sistema Online</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Área de contenido principal -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 overflow-hidden">
+        
+        <!-- Barra lateral izquierda: Trivia y estadísticas rápidas -->
+        <aside class="lg:col-span-1 flex flex-col gap-6">
+            <!-- Tarjeta de datos de la Liga Pro de Ecuador -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-md">
+                <h2 class="text-md font-bold text-yellow-400 mb-3 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    Fútbol Ecuatoriano
+                </h2>
+                <div class="space-y-3 text-xs text-gray-300">
+                    <div class="flex justify-between border-b border-slate-800/60 pb-2">
+                        <span>Máximo Campeón:</span>
+                        <span class="font-semibold text-white">Barcelona SC (16)</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-800/60 pb-2">
+                        <span>Rey de Copas:</span>
+                        <span class="font-semibold text-white">LDU Quito (5 Int.)</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-800/60 pb-2">
+                        <span>Goleador Histórico Tri:</span>
+                        <span class="font-semibold text-white">Enner Valencia (44)</span>
+                    </div>
+                    <div class="flex justify-between pb-1">
+                        <span>Gran Cantera:</span>
+                        <span class="font-semibold text-emerald-400">Ind. del Valle</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Minijuego de Trivia -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-md flex-1 flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-md font-bold text-emerald-400 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        Trivia Futbolera
+                    </h2>
+                    <span id="trivia-score" class="text-xs bg-emerald-950 text-emerald-400 px-2 py-1 rounded-full font-bold">Puntos: 0</span>
+                </div>
+                
+                <div id="trivia-container" class="flex-1 flex flex-col justify-between">
+                    <div>
+                        <p id="trivia-question" class="text-sm font-semibold text-white mb-4">Cargando pregunta...</p>
+                        <div id="trivia-options" class="space-y-2">
+                            <!-- Las opciones se renderizan con JS -->
+                        </div>
+                    </div>
+                    
+                    <button id="next-trivia-btn" class="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-xs font-bold py-2 rounded-xl transition hidden">
+                        Siguiente Pregunta
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Centro: Ventana del Chat -->
+        <section class="lg:col-span-3 flex flex-col bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl h-[70vh] lg:h-[78vh]">
+            
+            <!-- Barra superior con sugerencias de preguntas rápidas -->
+            <div class="bg-slate-900/80 border-b border-slate-800 px-4 py-3 flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-none items-center">
+                <span class="text-xs text-slate-400 font-semibold mr-2 flex items-center gap-1 shrink-0">
+                    <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                    Sugerencias:
+                </span>
+                <button onclick="useSuggestion('¿Quién es el máximo goleador de la selección ecuatoriana?')" class="text-xs bg-slate-800 hover:bg-slate-700 text-gray-300 px-3 py-1.5 rounded-full border border-slate-700/50 transition">
+                    Goleador de La Tri 🇪🇨
+                </button>
+                <button onclick="useSuggestion('¿Qué equipos ecuatorianos han ganado torneos internacionales?')" class="text-xs bg-slate-800 hover:bg-slate-700 text-gray-300 px-3 py-1.5 rounded-full border border-slate-700/50 transition">
+                    Copas de Ecuador 🏆
+                </button>
+                <button onclick="useSuggestion('¿Cuáles son los máximos campeones de la UEFA Champions League?')" class="text-xs bg-slate-800 hover:bg-slate-700 text-gray-300 px-3 py-1.5 rounded-full border border-slate-700/50 transition">
+                    Reyes de Europa 🇪🇺
+                </button>
+                <button onclick="useSuggestion('¿Quién ganó el último mundial de fútbol y cómo fue el podio?')" class="text-xs bg-slate-800 hover:bg-slate-700 text-gray-300 px-3 py-1.5 rounded-full border border-slate-700/50 transition">
+                    Último Mundial 🌎
+                </button>
+            </div>
+
+            <!-- Historial de mensajes -->
+            <div id="chat-history" class="chat-scroll flex-1 overflow-y-auto p-4 lg:p-6 space-y-4 bg-slate-950/40">
+                <!-- Mensaje de bienvenida -->
+                <div class="flex items-start gap-3 max-w-[85%]">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-600 flex-shrink-0 flex items-center justify-center text-white text-sm font-bold border border-emerald-400/30">
+                        FB
+                    </div>
+                    <div class="bg-slate-800 border border-slate-700/50 text-gray-100 rounded-2xl rounded-tl-none p-4 shadow-sm">
+                        <p class="text-sm leading-relaxed">
+                            ¡Hola, crack! Bienvenido a <strong>FutbolBot</strong>. ⚽️🏃‍♂️
+                        </p>
+                        <p class="text-sm leading-relaxed mt-2">
+                            Soy tu especialista en fútbol del planeta y, de manera muy especial, del balompié ecuatoriano. Pregúntame sobre la <strong>LigaPro, Copa Libertadores, la Tri en Eliminatorias, mundiales, datos históricos</strong> o lo que desees saber sobre el rey de los deportes. ¿Por dónde empezamos a rodar el balón?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerta de Error (Oculta por defecto) -->
+            <div id="error-toast" class="hidden mx-4 my-2 p-3 bg-red-950 border border-red-800 text-red-200 rounded-xl text-xs flex justify-between items-center">
+                <span id="error-message">Error de conexión. Inténtalo de nuevo.</span>
+                <button type="button" onclick="hideError()" class="text-red-400 hover:text-white font-bold ml-2">X</button>
+            </div>
+
+            <!-- Formulario de Entrada de Texto -->
+            <form id="chat-form" class="p-4 bg-slate-900 border-t border-slate-800 flex gap-3 items-center">
+                <div class="relative flex-1">
+                    <input 
+                        type="text" 
+                        id="user-input" 
+                        autocomplete="off"
+                        placeholder="Pregúntame sobre la Tri, LigaPro, Messi, la Champions, etc..." 
+                        class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition"
+                    />
+                </div>
+                <button 
+                    type="submit" 
+                    class="bg-emerald-600 hover:bg-emerald-500 text-white p-3 rounded-xl flex items-center justify-center transition font-semibold shrink-0 disabled:opacity-50"
+                    id="send-btn"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-4 px-6 text-center text-xs text-gray-500">
+        <p>© 2026 FutbolBot. Impulsado por Inteligencia Artificial especializada en el Deporte Rey.</p>
+    </footer>
+
+    <!-- Lógica de Negocio y JavaScript -->
+    <script>
+        // Configuración de la API (La variable apiKey se llena automáticamente en el entorno de ejecución)
+        const apiKey = ""; 
+
+        const systemPrompt = `Eres 'FutbolBot', un asistente experto y apasionado del fútbol mundial y ecuatoriano. Conoces de forma muy profunda todo lo referente a:
+1. Fútbol de Ecuador: LigaPro, Serie B, Copa Ecuador, la Selección de Ecuador (La Tri), historia de Barcelona SC, Emelec, Liga de Quito (único rey de copas internacional del país), Independiente del Valle, El Nacional, Deportivo Quito, etc. Estadísticas históricas, entrenadores, canteras, goleadores emblemáticos (como Enner Valencia, Alberto Spencer, Chucho Benítez, Antonio Valencia).
+2. Fútbol Mundial: Copas del Mundo, UEFA Champions League, Copa Libertadores, Copa América, Eurocopa, ligas top de Europa (Premier League, LaLiga, Serie A, etc.), y biografías e hitos de leyendas como Pelé, Maradona, Messi, Cristiano Ronaldo, Ronaldinho, Cruyff, etc.
+
+Responde siempre en español de forma entusiasta, analítica y amigable. Si el usuario te pregunta por temas que no tienen ninguna relación con el fútbol o deportes, reconduce la conversación sutilmente de vuelta al fútbol con una frase divertida (por ejemplo: "Ese es un buen pase, pero ¡volvamos al terreno de juego a hablar de goles!"). 
+
+Usa emojis de fútbol, banderas y un lenguaje que demuestre que te encanta este deporte.`;
+
+        // Elementos del DOM
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const chatHistory = document.getElementById('chat-history');
+        const sendBtn = document.getElementById('send-btn');
+        const errorToast = document.getElementById('error-toast');
+        const errorMessage = document.getElementById('error-message');
+
+        // Configuración de Envío del Formulario
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const prompt = userInput.value.trim();
+            if (!prompt) return;
+
+            // Limpiar input y deshabilitar controles mientras se procesa
+            userInput.value = '';
+            setLoadingState(true);
+
+            // Agregar mensaje del usuario en pantalla
+            appendMessage(prompt, 'user');
+
+            // Consultar a Gemini
+            try {
+                const responseText = await queryGemini(prompt);
+                appendMessage(responseText, 'bot');
+            } catch (err) {
+                console.error(err);
+                showError("No se pudo obtener respuesta del servidor futbolero. Asegúrate de tener conexión o intenta más tarde.");
+            } finally {
+                setLoadingState(false);
+            }
+        });
+
+        // Usar atajos de preguntas sugeridas
+        function useSuggestion(text) {
+            userInput.value = text;
+            chatForm.dispatchEvent(new Event('submit'));
+        }
+
+        // Envío de solicitud a la API de Gemini (con Backoff Exponencial de 5 intentos)
+        async function queryGemini(userQuery) {
+            // CORRECCIÓN: Definimos la URL de manera dinámica para que use la apiKey cargada en tiempo de ejecución.
+            const dynamicEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            };
+
+            // Función auxiliar para reintentos progresivos
+            const fetchWithRetry = async (url, fetchOptions, retries = 5, delay = 1000) => {
+                try {
+                    const response = await fetch(url, fetchOptions);
+                    if (!response.ok) {
+                        throw new Error(`HTTP Error Status: ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    if (retries > 0) {
+                        // Retrasos exponenciales de reintento: 1s, 2s, 4s, 8s, 16s
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return fetchWithRetry(url, fetchOptions, retries - 1, delay * 2);
+                    }
+                    throw error;
+                }
+            };
+
+            const result = await fetchWithRetry(dynamicEndpoint, options);
+            const textResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
+            
+            if (!textResponse) {
+                throw new Error("No se pudo extraer el texto de la respuesta.");
+            }
+            return textResponse;
+        }
+
+        // Agregar elementos visuales de mensajes en la interfaz
+        function appendMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex items-start gap-3 max-w-[85%] ${sender === 'user' ? 'ml-auto flex-row-reverse' : ''}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = `w-9 h-9 rounded-xl flex-shrink-0 flex items-center justify-center text-sm font-bold border ${
+                sender === 'user' 
+                ? 'bg-emerald-600 text-white border-emerald-400/30' 
+                : 'bg-slate-800 text-emerald-400 border-slate-700'
+            }`;
+            avatar.innerText = sender === 'user' ? 'Tú' : 'FB';
+
+            const bubble = document.createElement('div');
+            bubble.className = `p-4 shadow-sm text-sm leading-relaxed ${
+                sender === 'user'
+                ? 'bg-emerald-700 text-white rounded-2xl rounded-tr-none'
+                : 'bg-slate-800/90 border border-slate-700/40 text-gray-100 rounded-2xl rounded-tl-none'
+            }`;
+
+            if (sender === 'bot') {
+                bubble.innerHTML = formatMarkdown(text);
+            } else {
+                bubble.textContent = text;
+            }
+
+            msgDiv.appendChild(avatar);
+            msgDiv.appendChild(bubble);
+            chatHistory.appendChild(msgDiv);
+
+            // Desplazamiento automático hacia abajo
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        // Formateador básico de markdown (negritas y listas)
+        function formatMarkdown(text) {
+            let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            formatted = formatted.replace(/^\*\s(.*)$/gm, '• $1');
+            formatted = formatted.split('\n\n').map(p => `<p class="mb-2">${p.replace(/\n/g, '<br>')}</p>`).join('');
+            return formatted;
+        }
+
+        // Control visual de carga / escribiendo...
+        function setLoadingState(isLoading) {
+            if (isLoading) {
+                userInput.disabled = true;
+                sendBtn.disabled = true;
+                
+                const loadingBubble = document.createElement('div');
+                loadingBubble.id = 'typing-indicator';
+                loadingBubble.className = 'flex items-start gap-3 max-w-[85%]';
+                loadingBubble.innerHTML = `
+                    <div class="w-9 h-9 rounded-xl bg-slate-800 text-emerald-400 border border-slate-700 flex-shrink-0 flex items-center justify-center text-sm font-bold">
+                        FB
+                    </div>
+                    <div class="bg-slate-800/90 border border-slate-700/40 text-gray-400 rounded-2xl rounded-tl-none p-4 shadow-sm flex items-center gap-1.5">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 0.3s"></span>
+                    </div>
+                `;
+                chatHistory.appendChild(loadingBubble);
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            } else {
+                userInput.disabled = false;
+                sendBtn.disabled = false;
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) indicator.remove();
+            }
+        }
+
+        // Control visual de la alerta de error
+        function showError(msg) {
+            errorMessage.textContent = msg;
+            errorToast.classList.remove('hidden');
+            setTimeout(() => {
+                hideError();
+            }, 6000);
+        }
+
+        function hideError() {
+            errorToast.classList.add('hidden');
+        }
+
+        // ==========================================
+        //  Lógica del Juego de Trivia Lateral
+        // ==========================================
+        const triviaData = [
+            {
+                q: "¿Qué club ecuatoriano ganó la Copa Libertadores en 2008?",
+                options: ["Barcelona SC", "Emelec", "Liga de Quito", "Independiente del Valle"],
+                correct: 2,
+                reason: "¡Liga de Quito! Derrotó a Fluminense en el mítico Estadio Maracaná por penales."
+            },
+            {
+                q: "¿Quién es el máximo goleador histórico en la historia de los Mundiales?",
+                options: ["Miroslav Klose", "Ronaldo Nazário", "Pelé", "Lionel Messi"],
+                correct: 0,
+                reason: "¡Miroslav Klose! El alemán tiene el récord histórico con 16 goles anotados."
+            },
+            {
+                q: "¿Qué jugador ecuatoriano fue figura y capitán en el Manchester United?",
+                options: ["Enner Valencia", "Antonio Valencia", "Pervis Estupiñán", "Felipe Caicedo"],
+                correct: 1,
+                reason: "¡Antonio Valencia! El 'Expreso Amazónico' vistió la camiseta de los Red Devils durante 10 temporadas."
+            },
+            {
+                q: "¿En qué mundial de la FIFA debutó la selección absoluta de Ecuador?",
+                options: ["EE.UU. 1994", "Corea-Japón 2002", "Alemania 2006", "Brasil 2014"],
+                correct: 1,
+                reason: "¡Corea-Japón 2002! El legendario gol de Iván Kaviedes contra Uruguay selló la clasificación histórica."
+            },
+            {
+                q: "¿Quién es el máximo anotador de la Copa Libertadores de América de todos los tiempos?",
+                options: ["Alberto Spencer", "Fernando Morena", "Daniel Onega", "Pelé"],
+                correct: 0,
+                reason: "¡Alberto Spencer! El ecuatoriano apodado 'Cabeza Mágica' anotó 54 goles (48 con Peñarol y 6 con Barcelona SC)."
+            }
+        ];
+
+        let currentTriviaIndex = 0;
+        let score = 0;
+
+        function loadTrivia() {
+            const trivia = triviaData[currentTriviaIndex];
+            document.getElementById('trivia-question').textContent = trivia.q;
+            
+            const optionsDiv = document.getElementById('trivia-options');
+            optionsDiv.innerHTML = ''; // Limpiar opciones
+
+            trivia.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = "button";
+                btn.className = "w-full text-left bg-slate-800 hover:bg-slate-700/80 text-xs text-slate-200 py-2.5 px-3 rounded-lg border border-slate-700/40 transition flex justify-between items-center";
+                btn.innerHTML = `<span>${opt}</span><span class="w-4 h-4 rounded-full border border-slate-600 inline-block"></span>`;
+                btn.onclick = () => selectOption(idx, btn);
+                optionsDiv.appendChild(btn);
+            });
+
+            document.getElementById('next-trivia-btn').classList.add('hidden');
+        }
+
+        function selectOption(selectedIdx, selectedBtn) {
+            const trivia = triviaData[currentTriviaIndex];
+            const optionsDiv = document.getElementById('trivia-options');
+            const buttons = optionsDiv.querySelectorAll('button');
+
+            // Deshabilitar botones para evitar clics duplicados
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === trivia.correct) {
+                    btn.classList.remove('bg-slate-800', 'hover:bg-slate-700/80');
+                    btn.classList.add('bg-emerald-950', 'border-emerald-500', 'text-emerald-300');
+                    btn.querySelector('span:last-child').className = "w-4 h-4 rounded-full bg-emerald-500 border border-emerald-400 flex items-center justify-center text-white text-[9px] font-bold";
+                    btn.querySelector('span:last-child').innerHTML = "✓";
+                } else if (idx === selectedIdx) {
+                    btn.classList.remove('bg-slate-800', 'hover:bg-slate-700/80');
+                    btn.classList.add('bg-red-950', 'border-red-500', 'text-red-300');
+                    btn.querySelector('span:last-child').className = "w-4 h-4 rounded-full bg-red-500 border border-red-400 flex items-center justify-center text-white text-[9px] font-bold";
+                    btn.querySelector('span:last-child').innerHTML = "✗";
+                }
+            });
+
+            // Ajustar puntaje
+            if (selectedIdx === trivia.correct) {
+                score += 10;
+                document.getElementById('trivia-score').textContent = `Puntos: ${score}`;
+            }
+
+            // Explicación adicional bajo la pregunta
+            const explanation = document.createElement('p');
+            explanation.className = "text-[11px] text-slate-400 italic mt-3 animate-pulse";
+            explanation.textContent = trivia.reason;
+            optionsDiv.appendChild(explanation);
+
+            // Mostrar el botón para continuar
+            document.getElementById('next-trivia-btn').classList.remove('hidden');
+        }
+
+        document.getElementById('next-trivia-btn').onclick = () => {
+            currentTriviaIndex = (currentTriviaIndex + 1) % triviaData.length;
+            loadTrivia();
+        };
+
+        // Iniciar el juego de trivia al arrancar
+        loadTrivia();
+
+    </script>
+</body>
+</html>
